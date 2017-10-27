@@ -26,12 +26,17 @@ bintree<T> leerArbol(T vacio) {
 // calcula si el valor de clave esta corretamente colocada
 // lineal en el número N de nodos del árbol, O(N)
 bool avl(bintree<int>arbol, unsigned int &altura, int& maximo, int& minimo){
-	if (arbol.empty()){ altura = 0; maximo = 0; minimo = 0; return true; }
+	if (arbol.empty())
+	{ altura = 0; maximo = 0; minimo = 0; return true; }
 	else{
 		unsigned int iz = 0, dr = 0;
 		int maxIz = 0, minIz = 0, maxDr = 0, minDr = 0;
-		if (avl(arbol.left(), iz, maxIz, minIz) && avl(arbol.right(), dr, maxDr, minDr)){
-			altura = 1 + std::max(iz, dr); int diferencia = iz - dr;
+
+		if (avl(arbol.left(), iz, maxIz, minIz) 
+		 && avl(arbol.right(), dr, maxDr, minDr)){
+			altura = 1 + std::max(iz, dr); 
+			int diferencia = iz - dr;
+			
 			if (std::abs(diferencia) <= 1){
 				if (iz == 0 && dr == 0){
 					maximo = arbol.root();
