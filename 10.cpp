@@ -11,11 +11,11 @@ using namespace std;
 class Bipartito
 {
 public:
+	// O(V) realizamos llamadas a dfs por cada uno de los vertices del grafo, pero en la función recursiva 
+	// solo se provocan llamadas recursivas si no tenemos el nodo marcado
 	Bipartito(Grafo const& g) :marcados(g.V(), false), colores(g.V(), false), esBp(true) {
 		for (size_t i = 0; i < g.V() && esBp; i++)
-		{
 			dfs(g, i);
-		}
 	};
 
 	bool esBipartito() {
@@ -27,9 +27,11 @@ private:
 	vector<bool> colores;
 	bool esBp;
 
-	void dfs(Grafo const& g, size_t v) { //O(V)
+	// Recorremos el grafo en profundidad, como marcamos al inicio de cada llamada,
+	// solo provocamos llamadas recursivas si no lo hemos visitado antes, O(V)
+	void dfs(Grafo const& g, size_t v) { 
 		marcados[v] = true;
-		//for each (size_t w in g.adj(v))
+
 		for (size_t w : g.adj(v))
 		{
 			if (!marcados[w]) {

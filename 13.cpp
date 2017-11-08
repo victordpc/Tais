@@ -20,7 +20,7 @@ public:
 		//Recorremos usandos dfs para recorrer el mapa
 		//Cada llamada efectiva desde aqui descubre una componente conexa del grafo
 		//El número de ovejas blancas es el numero de componentes conexas del grafo menos uno (el borde)
-		// Coste O(n) n=número de nodos
+		// Coste O(V)
 		for (int i = 0; i < filas; i++) {
 			for (int j = 0; j < columnas; j++) {
 				if (!marcados[i][j] && ma[i][j] != 'X') {
@@ -45,7 +45,7 @@ private:
 	int filas;
 	int columnas;
 
-	//función dfs
+	//función dfs O(V)
 	void dfs(Mapa const& G, Punto v) {
 		marcados[v.first][v.second] = true;
 		for (int i = 0; i < 4; i++) {

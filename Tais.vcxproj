@@ -127,6 +127,10 @@
     <Text Include="Casos.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="10.cpp" />
+    <ClCompile Include="12.cpp" />
+    <ClCompile Include="13.cpp" />
+    <ClCompile Include="15.cpp" />
     <ClCompile Include="16.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
