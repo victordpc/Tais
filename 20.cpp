@@ -1,16 +1,10 @@
 //Victor del Pino
 //TAIS37
 
-#include <algorithm>
-#include <string>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <vector>
-#include <queue>
-#include <stack>
-#include "GrafoValorado.h"
-#include "PriorityQueue.h"
-#include "ConjuntosDisjuntos.h"
 
 //class CuentaOvejas
 //{
@@ -60,84 +54,58 @@
 //	}
 //};
 
-
-class Pavimenta
+class ReparaMangueras
 {
 public:
-	Pavimenta(GrafoValorado<size_t> const&gv, size_t vertices, size_t aristas) :coste(0),todos(false){
+	// Estrategia:
+	// Poner un parche siempre que haga falta
+	ReparaMangueras(std::vector<size_t> manguera, size_t agujeros, size_t lParche) 
+		:manguera(manguera), agujeros(agujeros), parches(lParche) ,resultado(1)
+	{
+		if (agujeros > 1)  {
+			size_t avanzado = manguera[0];
 
-		// Obtenemos el arbol mínimo de espansión O(E)
-		std::vector<bool> marcados= std::vector<bool>(vertices, false);
-		size_t contadorMarcados=0;
-		PriorityQueue<Arista<size_t>, std::less<size_t>> pq; 
-		ConjuntosDisjuntos cd = ConjuntosDisjuntos(vertices);
-		std::stack<Arista<size_t>> mst;
-
-		// Creamos la lista de prioridad de vertices O(E)
-		for (size_t i = 0; i < vertices; i++){
-			marcados[i] = true;
-			AdysVal<size_t> adjuntos = gv.adj(i);
-			for (size_t j = 0; j < adjuntos.size(); j++) {
-				pq.push(adjuntos[j]);
+			for (size_t i = 1; i < agujeros; i++)
+			{
+				if (avanzado + parches < manguera[i]) {
+					++resultado;
+					avanzado = manguera[i] ;
+				}
 			}
 		}
-
-		//Creamos el arbol mínimo de expansión usando Kruskal O(V · log(v))
-		while (!pq.size()==0 && mst.size() < gv.V() - 1) {
-			Arista<size_t> e = pq.top();
-			pq.pop();
-			int v = e.uno(), w = e.otro(v);
-			if (!cd.unidos(v, w))
-			{
-				cd.unir(v, w);
-				mst.push(e);
-			}
-		};
-
-		// Guardamos si todo pertenece a la misma componente conexa.
-		todos = cd.;
-
 	};
-	bool puede() {
-		return todos;
+	
+	size_t Resultado() {
+		return resultado;
 	}
-	size_t metros() {
-		return coste;
-	}
+	
 private:
-	size_t coste;
-	bool todos;
+	std::vector<size_t> manguera;
+	size_t agujeros;
+	size_t parches;
+	size_t resultado;
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
-	size_t intersecciones= 0, calles= 0;
+	size_t agujeros= 0, lParche= 0;
 
-
-	std::cin >> intersecciones;
-	std::cin >> calles;
+	std::cin >> agujeros;
+	std::cin >> lParche;
 
 	if (std::cin.fail()) return false;
 
-	GrafoValorado <size_t> gv = GrafoValorado<size_t>(intersecciones);
-
-	////Quitamos el salto de línea 
-	//std::cin.get();
-
-	size_t lado1 = 0, lado2 = 0, valor = 0;
-	for (size_t i = 0; i < calles; i++) {
-		std::cin >> lado1 >> lado2 >> valor;
-		Arista<size_t> a = Arista<size_t>(lado1, lado2, valor);
+	std::vector<size_t> mangera=std::vector<size_t>(agujeros);
+	for (size_t i = 0; i < agujeros; i++)
+	{
+		std::cin >> mangera[i];
 	}
 
-	Pavimenta pv = Pavimenta(gv, intersecciones, calles);
+ReparaMangueras rM=	ReparaMangueras(mangera, agujeros, lParche);
 
-	if (pv.puede())
-		std::cout << pv.metros();
-	else
-		std::cout << "Imposible";
-	std::cout << std::endl;
+std::cout << rM.Resultado();
+std::cout << std::endl;
 
 	return true;
 }

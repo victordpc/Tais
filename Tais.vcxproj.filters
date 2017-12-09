@@ -50,22 +50,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="CasosCuentaOvejas.txt" />
     <Text Include="Casos.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="16.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="15.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="12.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="13.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="10.cpp">
+    <ClCompile Include="21.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
