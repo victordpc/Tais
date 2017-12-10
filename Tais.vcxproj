@@ -128,7 +128,7 @@
     <Text Include="CasosCuentaOvejas.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="21.cpp" />
+    <ClCompile Include="22.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

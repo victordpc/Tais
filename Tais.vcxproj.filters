@@ -54,7 +54,7 @@
     <Text Include="Casos.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="21.cpp">
+    <ClCompile Include="22.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
