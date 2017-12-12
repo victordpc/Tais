@@ -125,10 +125,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Casos.txt" />
+    <Text Include="Casos21.txt" />
     <Text Include="CasosCuentaOvejas.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="24.cpp" />
+    <ClCompile Include="20.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

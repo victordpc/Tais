@@ -11,6 +11,7 @@ class ReparaMangueras
 public:
 	// Estrategia:
 	// Poner un parche siempre que haga falta
+	// O(n)
 	ReparaMangueras(std::vector<size_t> Manguera, size_t agujeros, size_t lParche) 
 		:manguera(Manguera), agujeros(agujeros), parches(lParche) ,resultado(1)
 	{
@@ -41,23 +42,24 @@ private:
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
-	size_t agujeros= 0, lParche= 0;
+	size_t agujeros = 0, lParche = 0;
 
 	std::cin >> agujeros;
 	std::cin >> lParche;
 
 	if (std::cin.fail()) return false;
 
-	std::vector<size_t> mangera=std::vector<size_t>(agujeros);
+	std::vector<size_t> mangera = std::vector<size_t>(agujeros);
+
 	for (size_t i = 0; i < agujeros; i++)
 	{
 		std::cin >> mangera[i];
 	}
 
-ReparaMangueras rM=	ReparaMangueras(mangera, agujeros, lParche);
+	ReparaMangueras rM = ReparaMangueras(mangera, agujeros, lParche);// O(n)
 
-std::cout << rM.Resultado();
-std::cout << std::endl;
+	std::cout << rM.Resultado();
+	std::cout << std::endl;
 
 	return true;
 }

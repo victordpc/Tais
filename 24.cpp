@@ -1,95 +1,91 @@
-//Victor del Pino
-//TAIS37
-
+//Diego Acuña Berger
+//TAIS03
+#include <algorithm>
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
 #include <algorithm>
+#include <stdio.h>
 #include <vector>
-#include <functional>
+#include <climits>
+#include <queue>
 
-class ReparteSitios
-{
+using namespace std;
+
+class Pelicula{
 public:
-	// Estrategia:
-	// Como mucho hay que hacer tantos viajes como pasajeros
-	// colocamos a los viajeros en el primer hueco que entren
-	ReparteSitios(std::vector<size_t> pesoPasajero, size_t pesoMaximo, size_t numPasajeros) 
-		:pesos(pesoPasajero), max(pesoMaximo), pasajeros(numPasajeros) ,resultado(1), ocupados(numPasajeros,0)
-	{
-		if (pasajeros > 1)  {
-			ocupados[0] = pesos[0];
-	
-			for (size_t i = 1; i < pasajeros; i++)
-			{
-				for (size_t j = 0; j < pasajeros; j++)
-				{
-					if (pesos[i] + ocupados[j] <= max) {
-						if (ocupados[j] == 0) {
-							++resultado;
-						}
-						ocupados[j] += pesos[i];
-						j = pasajeros;
-					}
-				}
-			}
-		}
-	};
-	
-	size_t Resultado() {
-		return resultado;
-	}
-	
+    Pelicula(int i, int f){
+        ini = i;
+        fin = f;
+    }
+    bool operator<(Pelicula const & b) const{
+        return fin < b.fin;
+    }
+    bool operator>(Pelicula const & b) const {
+        return fin > b.fin;
+    }
+    int getFin() const {
+        return fin;
+    }
+    int getIni() const {
+        return ini;
+    }
 private:
-	std::vector<size_t> pesos;
-	std::vector<size_t> ocupados;
-	size_t max;
-	size_t pasajeros;
-	size_t resultado;
+    int ini;
+    int fin;
 };
 
-// Resuelve un caso de prueba, leyendo de la entrada la
-// configuraci�n, y escribiendo la respuesta
+// O(n)
+int resolver(vector<Pelicula> const & peliculas){
+    
+    int contador = 0;
+    int hora_fin = 0;
+
+    for(int i = 0; i < peliculas.size(); ++i){
+        if(peliculas[i].getIni() >= hora_fin){
+            contador++;
+            hora_fin = peliculas[i].getFin() + 10;
+        }
+    }
+    return contador;
+}
+
+// Orden O(n·log(n))
 bool resuelveCaso() {
-	size_t pesoMaximo = 0, pasajeros = 0;
-
-	std::cin >> pesoMaximo;
-	std::cin >> pasajeros;
-
-	if (std::cin.fail()) return false;
-
-	std::vector<size_t> pesos = std::vector<size_t>(pasajeros);
-	for (size_t i = 0; i < pasajeros; i++)
-	{
-		std::cin >> pesos[i];
-	}
-	std::sort(pesos.begin(),pesos.end(), std::greater<size_t>());
-
-	ReparteSitios rM = ReparteSitios(pesos, pesoMaximo, pasajeros);
-
-	std::cout << rM.Resultado();
-	std::cout << std::endl;
-
-	return true;
+    int n;
+    cin >> n;
+    if(n == 0) return false;
+    int h, m, d;
+    char puntos;
+    vector<Pelicula> peliculas;
+    for(int i = 0; i < n; ++i){
+        cin >> h;
+        cin >> puntos;
+        cin >> m;
+        cin >> d;
+        int hora_ini = (h*60) + m;
+        int hora_fin = hora_ini + d;
+        Pelicula p = Pelicula(hora_ini, hora_fin);
+        peliculas.emplace_back(p);
+    }
+//Primero las peliculas que empiezan antes
+    sort(peliculas.begin(),peliculas.end()); // O(n·log(n))
+    int sol = resolver(peliculas);// O(n)
+    cout << sol << '\n';
+    return true;
 }
-
 int main() {
-
-	// ajustes para que cin extraiga directamente de un fichero
+    // ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("casos.txt");
-	auto cinbuf = std::cin.rdbuf(in.rdbuf());
+    std::ifstream in("/Users/usuario/Documents/EDA/EDA/casos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
-
-	//size_t casos = 0;
-	//std::cin >> casos;
-
-	while (resuelveCaso()) {}
-
-	// para dejar todo como estaba al principio
+    while(resuelveCaso());
+    // para dejar todo como estaba al principio
 #ifndef DOMJUDGE
-	std::cin.rdbuf(cinbuf);
-	system("PAUSE");
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
 #endif
-
-	return 0;
+    return 0;
 }
+

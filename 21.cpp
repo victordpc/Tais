@@ -1,3 +1,4 @@
+
 //Victor del Pino
 //TAIS37
 
@@ -7,31 +8,41 @@
 #include <vector>
 #include <functional>
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <climits>
+#include <queue>
+
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <stdlib.h>
+#include <algorithm>
+#include <stdio.h>
+#include <vector>
+#include <climits>
+#include <queue>
+
+
 class ReparteSitios
 {
 public:
 	// Estrategia:
 	// Como mucho hay que hacer tantos viajes como pasajeros
-	// colocamos a los viajeros en el primer hueco que entren
-	ReparteSitios(std::vector<size_t> pesoPasajero, size_t pesoMaximo, size_t numPasajeros) 
-		:pesos(pesoPasajero), max(pesoMaximo), pasajeros(numPasajeros) ,resultado(1), ocupados(numPasajeros,0)
+	// emparejamos el mayor con el menor y si se pasa de peso avanzamos el mayor
+	ReparteSitios(std::vector<int> pesos, int pesoMaximo, int numPasajeros)
+		: max(pesoMaximo), pasajeros(numPasajeros) ,resultado(0)
 	{
-		if (pasajeros > 1)  {
-			ocupados[0] = pesos[0];
-	
-			for (size_t i = 1; i < pasajeros; i++)
-			{
-				for (size_t j = 0; j < pasajeros; j++)
-				{
-					if (pesos[i] + ocupados[j] <= max) {
-						if (ocupados[j] == 0) {
-							++resultado;
-						}
-						ocupados[j] += pesos[i];
-						j = pasajeros;
-					}
-				}
+		sort(pesos.begin(), pesos.end(), std::greater<int>()); // O(n·log n)
+
+		int i = 0;
+		int j = numPasajeros - 1;
+		while (i <= j) {
+			if (pesos[i] + pesos[j] <= max) {
+				--j;
 			}
+			++i;
+			++resultado;
 		}
 	};
 	
@@ -40,30 +51,27 @@ public:
 	}
 	
 private:
-	std::vector<size_t> pesos;
-	std::vector<size_t> ocupados;
-	size_t max;
-	size_t pasajeros;
-	size_t resultado;
+	int max;
+	int pasajeros;
+	int resultado;
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
-	size_t pesoMaximo = 0, pasajeros = 0;
+	int pesoMaximo = 0, pasajeros = 0;
 
 	std::cin >> pesoMaximo;
 	std::cin >> pasajeros;
 
 	if (std::cin.fail()) return false;
 
-	std::vector<size_t> pesos = std::vector<size_t>(pasajeros);
-	for (size_t i = 0; i < pasajeros; i++)
+	std::vector<int> pesos = std::vector<int>(pasajeros);
+	for (int i = 0; i < pasajeros; i++)
 	{
 		std::cin >> pesos[i];
 	}
-	std::sort(pesos.begin(),pesos.end(), std::greater<size_t>());
-
+	
 	ReparteSitios rM = ReparteSitios(pesos, pesoMaximo, pasajeros);
 
 	std::cout << rM.Resultado();
@@ -76,7 +84,7 @@ int main() {
 
 	// ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("casos.txt");
+	std::ifstream in("casos21.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 

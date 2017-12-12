@@ -52,9 +52,10 @@
   <ItemGroup>
     <Text Include="CasosCuentaOvejas.txt" />
     <Text Include="Casos.txt" />
+    <Text Include="Casos21.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="24.cpp">
+    <ClCompile Include="20.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
