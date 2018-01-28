@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -125,11 +125,19 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Casos.txt" />
+    <Text Include="Casos09.txt" />
+    <Text Include="Casos10.txt" />
+    <Text Include="Casos11.txt" />
+    <Text Include="Casos14.txt" />
+    <Text Include="Casos19.txt" />
+    <Text Include="Casos20.txt" />
     <Text Include="Casos21.txt" />
+    <Text Include="Casos28.txt" />
+    <Text Include="Casos40.txt" />
     <Text Include="CasosCuentaOvejas.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="20.cpp" />
+    <ClCompile Include="21_2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

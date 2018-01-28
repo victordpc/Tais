@@ -21,7 +21,7 @@ public:
 				}
 			}
 		}
-	};
+	}
 	size_t resultado()const {
 		return maxi;
 	}
@@ -33,7 +33,7 @@ private:
 	void dfs(Grafo const& g, size_t v, size_t & tam) { //O(V)
 		marcados[v] = true;
 		++tam;
-		for each (size_t w in g.adj(v))
+		for(size_t w : g.adj(v))
 		{
 			if (!marcados[w]) {
 				dfs(g, w, tam);
@@ -53,7 +53,7 @@ bool resuelveCaso() {
 
 	//if (std::cin.fail()) return false;
 
-	Grafo gr = Grafo(vertices);//O(v)
+	Grafo gr(vertices);//O(v)
 
 	int v = 0; int w = 0;
 	for (int i = 0; i < aristas; i++) { //O(E)
@@ -71,7 +71,7 @@ int main() {
 
 	// ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("casos.txt");
+	std::ifstream in("casos09.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 

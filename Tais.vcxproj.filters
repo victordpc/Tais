@@ -53,9 +53,17 @@
     <Text Include="CasosCuentaOvejas.txt" />
     <Text Include="Casos.txt" />
     <Text Include="Casos21.txt" />
+    <Text Include="Casos28.txt" />
+    <Text Include="Casos40.txt" />
+    <Text Include="Casos09.txt" />
+    <Text Include="Casos10.txt" />
+    <Text Include="Casos11.txt" />
+    <Text Include="Casos14.txt" />
+    <Text Include="Casos19.txt" />
+    <Text Include="Casos20.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="20.cpp">
+    <ClCompile Include="21_2.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
