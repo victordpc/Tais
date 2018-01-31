@@ -10,82 +10,57 @@
 #include <string>
 #include "Matriz.h"
 #include <stack>
+using namespace std;
 
-struct Cofre
-{
-	int tiempo;
-	int oro;
-};
-
-// Coste O(segundos*cofres) tanto en tiempo como en espacio
-class CazaTesoros
+class Aibofobia
 {
 public:
-	CazaTesoros(int segundos, int cofres, std::vector<Cofre> &datos) :numResultado(0) {
-		size_t n = cofres;
-		size_t M = segundos;
-		Matriz<int> mochila(n + 1, segundos + 1, 0);
-		// rellenar la matriz
-		for (int i = 1; i <= n; ++i)
-			for (int j = 1; j <= segundos; ++j)
-				if (datos[i - 1].tiempo * 3 > j)
-					mochila[i][j] = mochila[i - 1][j];
-				else
-					mochila[i][j] = std::max(mochila[i - 1][j],
-						mochila[i - 1][j - datos[i - 1].tiempo * 3] + datos[i - 1].oro);
+	Aibofobia(string palabra) :resultado(0) {
+		size_t n = palabra.length();
+		Matriz<int> datos(n + 1, n + 1, 0);
 
-		valor = mochila[cofres][segundos];
-
-		// cálculo de los objetos
-		int resto = segundos;
-		for (size_t i = cofres; i >= 1; --i) {
-			if (mochila[i][resto] != mochila[i-1][resto]) { // sí cogemos objeto i
-				++numResultado;
-				resultado.push(datos[i-1]);
-				resto = resto - (datos[i-1].tiempo*3);
+		//Valores iniciales a 0
+		for (size_t x = 0; x <= n; x++) {
+			for (size_t y = 0; y <= n; y++) {
+				if (x >= y) {
+					datos[x][y] = 0;
+				}
 			}
 		}
 
+		// recorrido por diagonales
+		for (size_t d = 1; d <= n - 1; ++d) {// recorre diagonales
+			for (size_t i = 1; i <= n - d; ++i) { // recorre elementos de diagonal
+				size_t j = i + d;
+
+				if (palabra[i - 1] == palabra[j - 1])
+					datos[i][j] = datos[i + 1][j - 1];
+				else {
+					datos[i][j] = min(datos[i + 1][j] + 1, datos[i][j - 1] + 1);
+				}
+			}
+		}
+			resultado = datos[1][n];
 	}
 
 	void Resultado(std::ostream& sout) {
-		sout << valor << std::endl;
-		sout << numResultado << std::endl;
-		for (int i = 0; i < numResultado; i++) {
-			sout << resultado.top().tiempo << " " << resultado.top().oro << std::endl;
-			resultado.pop();
-		}
+		sout << resultado << std::endl;
 	}
 
 private:
-	int numResultado;
-	int valor;
-	std::stack<Cofre> resultado;
+	int resultado;
 };
 
-// Orden O()
 bool resuelveCaso() {
 
-	int segundos = 0;
-	int cofres = 0;
-
-	std::cin >> segundos >> cofres;
+	string palabra;
+	std::cin >> palabra;
 
 	if (std::cin.fail()) return false;
 
-	std::vector<Cofre> datos = std::vector<Cofre>(cofres);
+	Aibofobia bfb = Aibofobia(palabra);
 
-	for (int i = 0; i < cofres; i++)
-	{
-		Cofre dato;
-		std::cin >> dato.tiempo >> dato.oro;
-		datos[i] = dato;
-	}
-
-	CazaTesoros cT = CazaTesoros(segundos, cofres, datos);
-
-	cT.Resultado(std::cout);
-	std::cout << "----" << std::endl;
+	bfb.Resultado(std::cout);
 
 	return true;
 }
@@ -93,7 +68,7 @@ bool resuelveCaso() {
 int main() {
 	// ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("casos28.txt");
+	std::ifstream in("Casos30.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 	while (resuelveCaso()) {};

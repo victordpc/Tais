@@ -8,20 +8,22 @@
 #include <functional>
 #include <vector>
 
-class Telesilla
+class ClashRoyale
 {
 public:
-	Telesilla(std::vector<size_t>& sillas, size_t peso) : resultado(0) {
-		std::sort(sillas.begin(), sillas.end(), std::greater<size_t>());
+	ClashRoyale(std::vector<size_t>& contrarios, std::vector<size_t>&nosotros) : resultado(0) {
 
+		std::sort(contrarios.begin(), contrarios.end(), std::greater<size_t>());
+		std::sort(nosotros.begin(), nosotros.end(), std::greater<size_t>());
 		size_t i = 0;
-		size_t j = sillas.size()-1;
+		size_t j = 0;
 
-		while (i <= j) {
-			if (i != j && sillas[i] + sillas[j] <= peso)
-				--j;
+		while (j < nosotros.size() && i < contrarios.size()) {
+			if (nosotros[j] >= contrarios[i]) {
+				++resultado;
+				++j;
+			}
 			++i;
-			++resultado;
 		}
 	};
 
@@ -36,20 +38,23 @@ private:
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
-	size_t peso = 0;
-	size_t gente = 0;
+	size_t ciudades = 0;
 
-	std::cin >> peso >> gente;
+	std::cin >> ciudades;
 
 	if (std::cin.fail()) return false;
+	//if (partidos== 0) return false;
 
-	std::vector<size_t>sillas(gente);
+	std::vector<size_t>contrarios(ciudades);
+	std::vector<size_t>nosotros(ciudades);
 
-	for (size_t i = 0; i < gente; i++)
-		std::cin >> sillas[i];
+	for (size_t i = 0; i < ciudades; i++)
+		std::cin >> contrarios[i];
+	for (size_t i = 0; i < ciudades; i++)
+		std::cin >> nosotros[i];
 
-	Telesilla rm(sillas, peso);
-	rm.Resultado();
+	ClashRoyale cr(contrarios, nosotros);
+	cr.Resultado();
 
 	return true;
 }
@@ -58,7 +63,7 @@ int main() {
 
 	// ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("Casos21.txt");
+	std::ifstream in("Casos23.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 

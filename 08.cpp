@@ -47,7 +47,7 @@ public:
 			b1 = (b.musicos / b.atriles) + 1;
 		return a1 > b1;
 	}
-};
+}; 
 
 // El coste de esta operación pertenece a O(p-n) lineal en la diferencia de partituras y número de instrumentos
 //size_t resolver(PriorityQueue<datos, std::greater<datos>> queue, size_t p, size_t n) {
