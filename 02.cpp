@@ -1,84 +1,113 @@
-// Grupo TAIS37, Victor del Pino Casilla
- 
-// Construye un árbol binario a partir de la entrada y después
-// calcula su altura de forma recursiva
-#include <algorithm>
+// Grupo 37, Víctor del Pino
+
+// Comentario general sobre la solución,
+// explicando cómo se resuelve el problema
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include "bintree_eda.h"
 
-// lee un árbol binario de la entrada estándar
-template <typename T>
-bintree<T> leerArbol(T vacio) {
+template<typename T>
+bintree<T> leerArbol(T arbolVacio) {
 	T raiz;
 	std::cin >> raiz;
-	if (raiz == vacio) { // es un árbol vacío
+	if (raiz == arbolVacio) {
 		return{};
 	}
-	else { // leer recursivamente los hijos
-		auto iz = leerArbol(vacio);
-		auto dr = leerArbol(vacio);
-		return{ iz, raiz, dr };
+	else {
+		bintree<T>iz = leerArbol(arbolVacio);
+		bintree<T>dr = leerArbol(arbolVacio);
+		return { iz,raiz,dr };
 	}
 }
 
-// dado un árbol binario, calcula las alturas de los hijos y los compara
-// calcula si el valor de clave esta corretamente colocada
-// lineal en el número N de nodos del árbol, O(N)
-bool avl(bintree<int>arbol, unsigned int &altura, int& maximo, int& minimo){
-	if (arbol.empty())
-	{ altura = 0; maximo = 0; minimo = 0; return true; }
-	else{
-		unsigned int iz = 0, dr = 0;
-		int maxIz = 0, minIz = 0, maxDr = 0, minDr = 0;
+bool esAvl(bintree<int> datos, int& min, int& max, int&altura) {
+	if (datos.empty())
+		return true;
 
-		if (avl(arbol.left(), iz, maxIz, minIz) 
-		 && avl(arbol.right(), dr, maxDr, minDr)){
-			altura = 1 + std::max(iz, dr); 
-			int diferencia = iz - dr;
-			
-			if (std::abs(diferencia) <= 1){
-				if (iz == 0 && dr == 0){
-					maximo = arbol.root();
-					minimo = arbol.root();
-					return true;
-				}
-				else if (iz == 0 && arbol.root() < minDr){
-					maximo = maxDr;
-					minimo = arbol.root();
-					return true;
-				}
-				else if (dr == 0 && arbol.root() > maxIz){
-					maximo = arbol.root();
-					minimo = minIz;
-					return true;
-				}
-				else if(maxIz< arbol.root() && arbol.root()<minDr){
-					maximo = maxDr;
-					minimo = minIz;
-					return true;
-				}
-			}
+	else {
+
+		auto arbolLf = datos.left();
+		auto arbolRh = datos.right();
+
+		int yo = datos.root();
+
+		int minLf, maxLf, alturaLf;
+		int minRh, maxRh, alturaRh;
+		bool resultadoLf = true, resultadoRh = true;
+		bool entraLf = true, entraRh = true;
+
+		if (arbolLf.empty()) {
+			maxLf = minLf = yo;
+			alturaLf = 0;
+			entraLf = false;
 		}
-		return false;
+		else {
+			resultadoLf = esAvl(arbolLf, minLf, maxLf, alturaLf);
+		}
+
+		if (arbolRh.empty()) {
+			maxRh = minRh = yo;
+			alturaRh = 0;
+			entraRh = false;
+		}
+		else {
+			resultadoRh = esAvl(arbolRh, minRh, maxRh, alturaRh);
+		}
+
+		if (entraLf && entraRh && resultadoLf && resultadoRh && abs(alturaLf - alturaRh) <= 1 && (minRh > yo) && (maxLf < yo)) {//&& resolver(datos.left()) && resolver(datos.right()))
+			max = maxRh;
+			min = minLf;
+			altura = 1 + std::max(alturaLf, alturaRh);
+			return true;
+		}
+		else if (entraLf && !entraRh && resultadoLf && resultadoRh && abs(alturaLf - alturaRh) <= 1 && (maxLf < yo)) {//&& resolver(datos.left()) && resolver(datos.right()))
+			max = maxRh;
+			min = minLf;
+			altura = 1 + alturaLf;
+			return true;
+		}
+		else if (!entraLf && entraRh && resultadoLf && resultadoRh && abs(alturaLf - alturaRh) <= 1 && (minRh > yo)) {//&& resolver(datos.left()) && resolver(datos.right()))
+			max = maxRh;
+			min = minLf;
+			altura = 1 +  alturaRh;
+			return true;
+		}
+		else if (!entraLf && !entraRh) {//&& resolver(datos.left()) && resolver(datos.right()))
+			max = maxRh;
+			min = minLf;
+			altura = 1;
+			return true;
+		}
+		else
+			return false;
 	}
 }
 
-// resuelve un caso de prueba
+// función que resuelve el problema
+// comentario sobre el coste, O(f(N)), donde N es el numero de nodos del arbol ya que los recorre todos para averiguarlo.
+bool resolver(bintree<int> datos) {
+	int min = 0;
+	int max = 0;
+	int altura = 0;
+	return esAvl(datos, min, max, altura);
+}
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
 void resuelveCaso() {
 	auto arbol = leerArbol(-1);
-	unsigned int altura = 0;
-	int max = 0, min = 0;
-	bool sol = avl(arbol, altura,max,min);
-	if (sol) std::cout << "SI" << std::endl; 
-	else std::cout << "NO" << std::endl;
+	bool sol = resolver(arbol);
+	if (sol)
+		std::cout << "SI" << "\n";
+	else
+		std::cout << "NO" << "\n";
 }
 
 int main() {
-
 	// ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("casos.txt");
+	std::ifstream in("Casos02.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 
@@ -94,5 +123,4 @@ int main() {
 #endif
 
 	return 0;
-
 }

@@ -1,56 +1,64 @@
-// Grupo TAIS37, Victor del Pino Casilla
- 
-// Construye un árbol binario a partir de la entrada y después
-// calcula su altura de forma recursiva
-#include <algorithm>
+// Grupo 37, Víctor del Pino
+
+// Comentario general sobre la solución,
+// explicando cómo se resuelve el problema
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include "bintree_eda.h"
 
-// lee un árbol binario de la entrada estándar
-template <typename T>
-bintree<T> leerArbol(T vacio) {
+template<typename T>
+bintree<T> leerArbol(T arbolVacio) {
 	T raiz;
 	std::cin >> raiz;
-	if (raiz == vacio) { // es un árbol vacío
+	if (raiz == arbolVacio) {
 		return{};
 	}
-	else { // leer recursivamente los hijos
-		auto iz = leerArbol(vacio);
-		auto dr = leerArbol(vacio);
-		return{ iz, raiz, dr };
+	else {
+		bintree<T>iz = leerArbol(arbolVacio);
+		bintree<T>dr = leerArbol(arbolVacio);
+		return { iz,raiz,dr };
 	}
 }
 
-// dado un árbol binario, calcula las alturas de los hijos y los compara
-// lineal en el número N de nodos del árbol, O(N)
-bool equilibrado(bintree<char>arbol, unsigned int &altura){
-	if (arbol.empty()){ altura = 0; return true; }
-	else{
-		unsigned int iz = 0, dr = 0;
-		if (equilibrado(arbol.left(), iz) && equilibrado(arbol.right(), dr)){
-			altura = 1 + std::max(iz, dr); int diferencia = iz - dr;
-			if (std::abs(diferencia) <= 1)
-				return true;
-		}
-		return false;
+int altura(bintree<char> datos) {
+	if (datos.empty())
+		return 0;
+	else
+		return 1 + std::max(altura(datos.right()), altura(datos.left()));
+}
+
+// función que resuelve el problema
+// comentario sobre el coste, O(f(N)), donde N es el numero de nodos del arbol
+bool resolver(bintree<char> datos) {
+	if (datos.empty())
+		return true;
+
+	else {
+		auto alturaLf = altura(datos.left());
+		auto alturaRh = altura(datos.right());
+		if (abs(alturaLf - alturaRh) <= 1 && resolver(datos.left()) && resolver(datos.right()))
+			return true;
+		else
+			return false;
 	}
 }
 
-// resuelve un caso de prueba
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
 void resuelveCaso() {
 	auto arbol = leerArbol('.');
-	unsigned int altura;
-	bool sol = equilibrado(arbol,altura);
-	if (sol) std::cout << "SI" << std::endl; 
-	else std::cout << "NO" << std::endl;
+	bool sol = resolver(arbol);
+	if (sol)
+		std::cout << "SI" << "\n";
+	else
+		std::cout << "NO" << "\n";
 }
 
 int main() {
-
 	// ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("casos.txt");
+	std::ifstream in("Casos01.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 
@@ -66,5 +74,4 @@ int main() {
 #endif
 
 	return 0;
-
 }

@@ -1,44 +1,60 @@
-// Grupo TAIS37, Victor del Pino Casilla
- 
-// Construye un árbol binario a partir de la entrada y después
-// calcula su altura de forma recursiva
-#include <algorithm>
+// Grupo 37, Víctor del Pino
+
+// Comentario general sobre la solución,
+// explicando cómo se resuelve el problema
 #include <iostream>
+#include <fstream>
+#include <algorithm>
 #include "bintree_eda.h"
 
-// lee un árbol binario de la entrada estándar
-template <typename T>
-bintree<T> leerArbol(T vacio) {
+template<typename T>
+bintree<T> leerArbol(T arbolVacio) {
 	T raiz;
 	std::cin >> raiz;
-	if (raiz == vacio) { // es un árbol vacío
+	if (raiz == arbolVacio) {
 		return{};
 	}
-	else { // leer recursivamente los hijos
-		auto iz = leerArbol(vacio);
-		auto dr = leerArbol(vacio);
-		return{ iz, raiz, dr };
+	else {
+		bintree<T>iz = leerArbol(arbolVacio);
+		bintree<T>dr = leerArbol(arbolVacio);
+		return { iz,raiz,dr };
 	}
 }
 
-// dado un árbol binario, calcula su altura
-// lineal en el número N de nodos del árbol, O(N)
-unsigned int altura(bintree<char> const& arbol) {
-	if (arbol.empty())
+// función que resuelve el problema
+// comentario sobre el coste, O(f(N)), donde N es el numero de nodos del arbol
+int resolver(bintree<char> datos) {
+	if (datos.empty())
 		return 0;
 	else
-		return 1 + std::max(altura(arbol.left()), altura(arbol.right()));
+		return 1 + std::max(resolver(datos.right()), resolver(datos.left()));
 }
-// resuelve un caso de prueba
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
 void resuelveCaso() {
 	auto arbol = leerArbol('.');
-	int sol = altura(arbol);
+	int sol = resolver(arbol);
 	std::cout << sol << "\n";
 }
+
 int main() {
+	// ajustes para que cin extraiga directamente de un fichero
+#ifndef DOMJUDGE
+	std::ifstream in("Casos00.txt");
+	auto cinbuf = std::cin.rdbuf(in.rdbuf());
+#endif
+
 	int numCasos;
 	std::cin >> numCasos;
 	for (int i = 0; i < numCasos; ++i)
 		resuelveCaso();
+
+	// para dejar todo como estaba al principio
+#ifndef DOMJUDGE
+	std::cin.rdbuf(cinbuf);
+	system("PAUSE");
+#endif
+
 	return 0;
 }

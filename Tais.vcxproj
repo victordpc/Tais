@@ -120,11 +120,17 @@
     <ClInclude Include="IndexPQ.h" />
     <ClInclude Include="Matriz.h" />
     <ClInclude Include="myTreeMap_AVL.h" />
+    <ClInclude Include="NewTreeMap_AVL.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="TreeMap_AVL.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Casos.txt" />
+    <Text Include="Casos00.txt" />
+    <Text Include="Casos01.txt" />
+    <Text Include="Casos02.txt" />
+    <Text Include="Casos03.txt" />
+    <Text Include="Casos04.txt" />
     <Text Include="Casos09.txt" />
     <Text Include="Casos10.txt" />
     <Text Include="Casos11.txt" />
@@ -141,9 +147,7 @@
     <Text Include="CasosCuentaOvejas.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="08.cpp" />
-    <ClCompile Include="28_2.cpp" />
-    <ClCompile Include="30.cpp" />
+    <ClCompile Include="04.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

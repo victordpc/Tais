@@ -48,6 +48,9 @@
     <ClInclude Include="PriorityQueue.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="NewTreeMap_AVL.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CasosCuentaOvejas.txt" />
@@ -65,15 +68,14 @@
     <Text Include="Casos23.txt" />
     <Text Include="Casos24.txt" />
     <Text Include="Casos27.txt" />
+    <Text Include="Casos00.txt" />
+    <Text Include="Casos01.txt" />
+    <Text Include="Casos02.txt" />
+    <Text Include="Casos03.txt" />
+    <Text Include="Casos04.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="28_2.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="30.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="08.cpp">
+    <ClCompile Include="04.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>

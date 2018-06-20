@@ -42,7 +42,7 @@ protected:
 	punteros al hijo izquierdo y al hijo derecho, y la altura.
 	*/
 	struct TreeNode;
-	using Link = TreeNode *;
+	using Link = TreeNode * ;
 	struct TreeNode {
 		clave_valor cv;
 		Link iz;
@@ -230,7 +230,7 @@ protected:
 	}
 	static void rotaIzq(Link & k1) {
 		Link k2 = k1->dr;
-		k2->tam_i += k1->tam_i; 
+		k2->tam_i += k1->tam_i;
 		k1->dr = k2->iz;
 		k2->iz = k1;
 		k1->altura = std::max(altura(k1->iz), altura(k1->dr)) + 1;

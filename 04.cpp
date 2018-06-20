@@ -1,48 +1,77 @@
-//Victor del Pino
-//TAIS37
+// Grupo 37, Víctor del Pino
 
-#include <algorithm>
+// Comentario general sobre la solución,
+// explicando cómo se resuelve el problema
 #include <iostream>
 #include <fstream>
-#include"myTreeMap_AVL.h"
+#include <algorithm>
+#include "NewTreeMap_AVL.h"
+//#include "bintree_eda.h"
 
+template<typename T>
+map<T, T> leer(T numeroNodos) {
+	map<T, T> arbol = map<T, T>();
+	T valor;
+	for (size_t i = 0; i < numeroNodos; i++) {
+		std::cin >> valor;
+		arbol.insert({ valor,0 });
+	}
+	return arbol;
+}
+
+template<typename T>
+void recorrido(map<T, T> datos, T ini, T fin) {
+	bool continua = true;
+
+	while (continua) {
+
+	}
+	
+}
+
+// función que resuelve el problema
+// comentario sobre el coste, O(f(N)), donde N es el numero de nodos del arbol ya que los recorre todos para averiguarlo.
+template<typename T>
+void resolver(map<T, T> datos) {
+	T ini = 0;
+	T fin = 0;
+	 recorrido(datos, ini, fin);
+}
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
 bool resuelveCaso() {
-	int n;
-	std::cin >> n;
-	if (n == 0) return false;
-	map<int, int> tree;
-	int num;
-	for (int i = 0; i < n; ++i) {
-		std::cin >> num;
-		tree.insert({ num,0 });
-	}
-	int n2;
-	std::cin >> n2;
-	int sol;
-	int posicion;
-	for (int i = 0; i < n2; ++i) {
-		std::cin >> posicion;
-		sol = tree.buscarPos(posicion);
-		if (sol != -1) std::cout << sol << "\n";
-		else std::cout << "??\n";
-	}
-	std::cout << "----\n";
-	return true;
+	unsigned int nodos = 0;
+	std::cin >> nodos;
+
+	if (nodos == 0)
+		return false;
+
+	auto arbol = leer(nodos);
+	resolver(arbol);
+	//auto sol = resolver(arbol);
+
+	//std::cout << sol.resultado() << "\n";
 }
 
 int main() {
-
 	// ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("casos.txt");
+	std::ifstream in("Casos02.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 
-	while (resuelveCaso()) {}
+	//int numCasos;
+	//std::cin >> numCasos;
+	//for (int i = 0; i < numCasos; ++i)
+	//	resuelveCaso();
 
-		// para dejar todo como estaba al principio
+	while (resuelveCaso())
+		return 0;
+
+	// para dejar todo como estaba al principio
 #ifndef DOMJUDGE
-		std::cin.rdbuf(cinbuf);
+	std::cin.rdbuf(cinbuf);
 	system("PAUSE");
 #endif
 

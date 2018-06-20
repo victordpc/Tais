@@ -36,9 +36,9 @@ protected:
 	using map_t = map<Clave, Valor, Comparador>;
 
 	/*
-	 Clase nodo que almacena internamente la pareja (clave, valor),
-	 punteros al hijo izquierdo y al hijo derecho, y la altura.
-	 */
+	Clase nodo que almacena internamente la pareja (clave, valor),
+	punteros al hijo izquierdo y al hijo derecho, y la altura.
+	*/
 	struct TreeNode;
 	using Link = TreeNode * ;
 	struct TreeNode {
@@ -329,7 +329,7 @@ protected:
 		Link act;
 		std::stack<Link> ancestros;  // antecesores no visitados
 
-		// construye el iterador al primero
+									 // construye el iterador al primero
 		Iterador(Link r) { act = first(r); }
 
 		// construye el iterador al último
