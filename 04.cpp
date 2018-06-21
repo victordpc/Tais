@@ -9,8 +9,8 @@
 //#include "bintree_eda.h"
 
 template<typename T>
-map<T, T> leer(T numeroNodos) {
-	map<T, T> arbol = map<T, T>();
+newMap<T, T> leer(T numeroNodos) {
+	newMap<T, T> arbol = newMap<T, T>();
 	T valor;
 	for (size_t i = 0; i < numeroNodos; i++) {
 		std::cin >> valor;
@@ -20,7 +20,7 @@ map<T, T> leer(T numeroNodos) {
 }
 
 template<typename T>
-void recorrido(map<T, T> datos, T ini, T fin) {
+void recorrido(newMap<T, T> datos, T ini, T fin) {
 	bool continua = true;
 
 	while (continua) {
@@ -32,7 +32,7 @@ void recorrido(map<T, T> datos, T ini, T fin) {
 // función que resuelve el problema
 // comentario sobre el coste, O(f(N)), donde N es el numero de nodos del arbol ya que los recorre todos para averiguarlo.
 template<typename T>
-void resolver(map<T, T> datos) {
+void resolver(newMap<T, T> datos) {
 	T ini = 0;
 	T fin = 0;
 	 recorrido(datos, ini, fin);

@@ -10,8 +10,8 @@
 //  Copyright (c) 2017 Alberto Verdejo. All rights reserved.
 //
 
-#ifndef NEWTREEMAP_AVL_H_
-#define NEWTREEMAP_AVL_H_
+#ifndef TREEMAP_AVL_H_
+#define TREEMAP_AVL_H_
 
 #include <algorithm>
 #include <functional>
@@ -24,7 +24,7 @@
 
 
 template <class Clave, class Valor, class Comparador = std::less<Clave>>
-class newMap {
+class map {
 public:
 	// parejas (clave, valor)
 	struct clave_valor {
@@ -33,12 +33,12 @@ public:
 		clave_valor(Clave const& c, Valor const& v = Valor()) : clave(c), valor(v) {};
 	};
 protected:
-	using newMap_t = newMap<Clave, Valor, Comparador>;
+	using map_t = map<Clave, Valor, Comparador>;
 
 	/*
-	Clase nodo que almacena internamente la pareja (clave, valor),
-	punteros al hijo izquierdo y al hijo derecho, y la altura.
-	*/
+	 Clase nodo que almacena internamente la pareja (clave, valor),
+	 punteros al hijo izquierdo y al hijo derecho, y la altura.
+	 */
 	struct TreeNode;
 	using Link = TreeNode * ;
 	struct TreeNode {
@@ -46,9 +46,8 @@ protected:
 		Link iz;
 		Link dr;
 		size_t altura;
-		unsigned int tam_i;
 		TreeNode(clave_valor const& e, Link i = nullptr, Link d = nullptr,
-			int alt = 1, unsigned int tamI=0) : cv(e), iz(i), dr(d), altura(alt), tam_i(tamI) {}
+			int alt = 1) : cv(e), iz(i), dr(d), altura(alt) {}
 	};
 
 	// puntero a la raíz de la estructura jerárquica de nodos
@@ -62,15 +61,15 @@ protected:
 
 public:
 
-	newMap(Comparador c = Comparador()) : raiz(nullptr), nelems(0), menor(c) {}
+	map(Comparador c = Comparador()) : raiz(nullptr), nelems(0), menor(c) {}
 
-	newMap(newMap_t const& other) {
+	map(map_t const& other) {
 		raiz = copia(other.raiz);
 		nelems = other.nelems;
 		menor = other.menor;
 	}
 
-	newMap_t & operator=(newMap_t const& that) {
+	map_t & operator=(map_t const& that) {
 		if (this != &that) {
 			libera(raiz);
 			raiz = copia(that.raiz);
@@ -80,7 +79,7 @@ public:
 		return *this;
 	}
 
-	~newMap() {
+	~map() {
 		libera(raiz);
 		raiz = nullptr;
 	};
@@ -158,7 +157,6 @@ protected:
 	void inserta(clave_valor const& cv, Link & a) {
 		if (a == nullptr) {
 			a = new TreeNode(cv);
-			a->tam_i++;
 			++nelems;
 		}
 		else if (menor(cv.clave, a->cv.clave)) {
@@ -331,14 +329,14 @@ protected:
 		Link act;
 		std::stack<Link> ancestros;  // antecesores no visitados
 
-									 // construye el iterador al primero
+		// construye el iterador al primero
 		Iterador(Link r) { act = first(r); }
 
 		// construye el iterador al último
 		Iterador() : act(nullptr) {}
 
 		// construye el iterador a una clave concreta (para find)
-		Iterador(newMap_t const* m, Clave const& c) {
+		Iterador(map_t const* m, Clave const& c) {
 			act = m->raiz;
 			bool encontrado = false;
 			while (act != nullptr && !encontrado) {
@@ -428,7 +426,7 @@ public:
 
 
 template <class Clave, class Valor, class Comparador>
-inline std::ostream& operator<<(std::ostream & o, newMap<Clave, Valor, Comparador> const& a) {
+inline std::ostream& operator<<(std::ostream & o, map<Clave, Valor, Comparador> const& a) {
 	a.print(o);
 	return o;
 }

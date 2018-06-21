@@ -112,6 +112,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="bintree_eda.h" />
+    <ClInclude Include="BusquedaTreeMap_AVL.h" />
     <ClInclude Include="ConjuntosDisjuntos.h" />
     <ClInclude Include="Grafo.h" />
     <ClInclude Include="GrafoDirigido.h" />
@@ -131,6 +132,10 @@
     <Text Include="Casos02.txt" />
     <Text Include="Casos03.txt" />
     <Text Include="Casos04.txt" />
+    <Text Include="Casos05.txt" />
+    <Text Include="Casos06.txt" />
+    <Text Include="Casos07.txt" />
+    <Text Include="Casos08.txt" />
     <Text Include="Casos09.txt" />
     <Text Include="Casos10.txt" />
     <Text Include="Casos11.txt" />
@@ -147,7 +152,7 @@
     <Text Include="CasosCuentaOvejas.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="04.cpp" />
+    <ClCompile Include="09.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

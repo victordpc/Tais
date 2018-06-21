@@ -51,6 +51,9 @@
     <ClInclude Include="NewTreeMap_AVL.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="BusquedaTreeMap_AVL.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CasosCuentaOvejas.txt" />
@@ -73,9 +76,13 @@
     <Text Include="Casos02.txt" />
     <Text Include="Casos03.txt" />
     <Text Include="Casos04.txt" />
+    <Text Include="Casos05.txt" />
+    <Text Include="Casos06.txt" />
+    <Text Include="Casos07.txt" />
+    <Text Include="Casos08.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="04.cpp">
+    <ClCompile Include="09.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>

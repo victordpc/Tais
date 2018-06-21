@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include "TreeMap_AVL.h"
+#include "BusquedaTreeMap_AVL.h"
 //#include "bintree_eda.h"
 
 template<typename T>
@@ -14,7 +14,7 @@ map<T, T> leer(T numeroNodos) {
 	T valor;
 	for (size_t i = 0; i < numeroNodos; i++) {
 		std::cin >> valor;
-		arbol.insert(valor);
+		arbol.insert({ valor,valor });
 	}
 	return arbol;
 }
@@ -23,9 +23,6 @@ template<typename T>
 void recorrido(map<T, T> datos, T ini, T fin) {
 	bool continua = true;
 
-	while (continua) {
-		auto root = datos.raiz();
-	}
 	
 }
 
@@ -35,7 +32,7 @@ template<typename T>
 void resolver(map<T, T> datos) {
 	T ini = 0;
 	T fin = 0;
-	 recorrido(datos, ini, fin);
+	auto resultado= datos.recorrido(ini, fin);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -67,7 +64,8 @@ int main() {
 	//	resuelveCaso();
 
 	while (resuelveCaso())
-		return 0;
+		return 0;
+
 	// para dejar todo como estaba al principio
 #ifndef DOMJUDGE
 	std::cin.rdbuf(cinbuf);
