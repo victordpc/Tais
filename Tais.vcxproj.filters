@@ -82,7 +82,7 @@
     <Text Include="Casos08.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="10.cpp">
+    <ClCompile Include="11.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
