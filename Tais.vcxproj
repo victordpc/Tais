@@ -139,6 +139,7 @@
     <Text Include="Casos09.txt" />
     <Text Include="Casos10.txt" />
     <Text Include="Casos11.txt" />
+    <Text Include="Casos12.txt" />
     <Text Include="Casos14.txt" />
     <Text Include="Casos19.txt" />
     <Text Include="Casos20.txt" />
@@ -149,10 +150,10 @@
     <Text Include="Casos27.txt" />
     <Text Include="Casos28.txt" />
     <Text Include="Casos40.txt" />
-    <Text Include="CasosCuentaOvejas.txt" />
+    <Text Include="Casos13.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="11.cpp" />
+    <ClCompile Include="12.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

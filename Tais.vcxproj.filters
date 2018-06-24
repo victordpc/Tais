@@ -56,7 +56,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="CasosCuentaOvejas.txt" />
     <Text Include="Casos.txt" />
     <Text Include="Casos21.txt" />
     <Text Include="Casos28.txt" />
@@ -80,9 +79,11 @@
     <Text Include="Casos06.txt" />
     <Text Include="Casos07.txt" />
     <Text Include="Casos08.txt" />
+    <Text Include="Casos12.txt" />
+    <Text Include="Casos13.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="11.cpp">
+    <ClCompile Include="12.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>

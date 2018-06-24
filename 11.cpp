@@ -6,13 +6,12 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
-#include "PriorityQueue.h"
-#include "Grafo.h"
+#include "GrafoDirigido.h"
 
-class bipartidor {
+class Arborescencias {
 public:
-	bipartidor(Grafo const& G) : _count(0), _marked(G.V(), false), _markedBlue(G.V(), false), _markedRed(G.V(), false), _solucion(true) {
-		dfs(G, 0, false);
+	Arborescencias(GrafoDirigido const& G) : gr(G),grInverso(G.reverse()),_count(0), _marked(G.V(), false), _solucion(true), _raiz(0), _encontrada(false) {
+		recorredor();
 	}
 
 	// ¿hay camino del origen a v?
@@ -26,44 +25,85 @@ public:
 	}
 
 	std::string solucion() const {
-		return _solucion?"SI":"NO";
+		std::string resultado;
+		if (_solucion && _encontrada)
+			resultado = "SI " + std::to_string(_raiz);
+		else
+			resultado = "NO";
+		return resultado;
 	}
 
 private:
-	std::vector<bool> _markedRed;	// marked[v] = ¿hay camino de s a v?
-	std::vector<bool> _markedBlue;  // marked[v] = ¿hay camino de s a v?
 	std::vector<bool> _marked;		// para no repetir nodos
+	std::vector<size_t> _edgeTo;		// edgeTo[v] = último vértice antes de llegar a v
 	size_t _count;					// número de vértices conectados a s
 	bool _solucion;					// indica si el grafo es bipartito
+	size_t _raiz;					// nodo raiz
+	bool _encontrada;				// hemos llegado a una raiz candidata
+	GrafoDirigido grInverso;
+	GrafoDirigido gr;
 
-	// recorrido en profundidad desde v
-	void dfs(Grafo const& G, size_t v, bool _alternancia) {
-		_marked[v] = true; // para no repetir vértices
-		++_count;
-		if (_alternancia)
-			_markedBlue[v] = true;
+	void recorredor() {
+		// Encontramos la raiz candidata, en el grafo inverso es la que tiene la matriz de adyacencia vacia
+		for (size_t i = 0; !_encontrada && i < grInverso.V(); i++)
+			if (grInverso.adj(i).size() == 0) {
+				_raiz = i;
+				_encontrada = true;
+			}
+		
+		// Comprobamos que la raiz candidata llega a todos los vértices con un camino único
+		dfs(_raiz);
+		
+		// si el numero de nodos visitados es igual al de vértices, hemos encontrado una raiz candidata
+		// y no hemos encontrado ciclos hay solucion
+		if (_encontrada && _solucion && _count == gr.V())
+			_solucion = true;
 		else
-			_markedRed[v] = true;
-		_alternancia = !_alternancia;
-
-		if(_solucion)
-		for (auto w : G.adj(v)) // recorremos todos los adyacentes a v
-			if (!_marked[w])
-				dfs(G, w, _alternancia);
-			else
-				if (_alternancia && _markedRed[w] || !_alternancia && _markedBlue[w]) {
-					_solucion = false;
-					return;
-				}
+			_solucion = false;
+	
 	}
+
+	// recorrido en profuncidad del grafo
+	void dfs(size_t v) {
+		++_count;
+		_marked[v] = true;
+		if (_solucion)
+			for (size_t w : gr.adj(v)) {
+				if (!_marked[w]) {
+					dfs(w);
+				}
+				else {
+					// hemos visitado este nodo mas de una vez luego hay ciclo y no es válido
+					_solucion = false;
+				}
+			}
+	}
+
+	//// recorrido en profundidad desde v
+	//void dfs(size_t v) {
+	//	_marked[v] = true; // para no repetir vértices
+	//	++_count;
+	//
+	//	if (.adj(v).size() == 0) //si no hay adjuntos es una raiz candidata
+	//		if (!_encontrada) { //si no he encontrado una raiz antes la almaceno como posible raiz
+	//			_encontrada = true;
+	//			_raiz = v;
+	//		}
+	//		else //si ya he encontrado una raiz candidata antes
+	//			if (_raiz != v) // y no es la misma que este nodo he encontrado dos raices y no hay solucion
+	//				_solucion = false;
+	//
+	//	if (_solucion) {
+	//		for (auto w : .adj(v)) { // recorremos todos los adyacentes a v
+	//			if (!_marked[w]) {
+	//				dfs( w);
+	//			}
+	//		}
+	//	}
+	//}
 };
 
-//// función que resuelve el problema
-//// comentario sobre el coste, O(f(N)), donde N es el numero de nodos del arbol ya que los recorre todos para averiguarlo.
-//void resolver(Grafo amiguitos,unsigned long int personas) {
-//}
-
-void leer(Grafo& gr,unsigned long int aristas) {
+void leer(GrafoDirigido& gr,unsigned long int aristas) {
 	unsigned long int dato1,dato2;
 	for (size_t i = 0; i < aristas; i++) {
 		std::cin >> dato1;
@@ -85,9 +125,9 @@ bool resuelveCaso() {
 	unsigned long int aristas= 0;
 	std::cin >> aristas;
 
-	Grafo gr(vertices);
+	GrafoDirigido gr(vertices);
 	leer(gr, aristas);
-	bipartidor resolvedor(gr);
+	Arborescencias resolvedor(gr);
 	std::cout << resolvedor.solucion() << "\n";
 
 	return true;
@@ -96,7 +136,7 @@ bool resuelveCaso() {
 int main() {
 	// ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-	std::ifstream in("Casos10.txt");
+	std::ifstream in("Casos11.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 

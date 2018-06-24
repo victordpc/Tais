@@ -12,7 +12,11 @@
 class bipartidor {
 public:
 	bipartidor(Grafo const& G) : _count(0), _marked(G.V(), false), _markedBlue(G.V(), false), _markedRed(G.V(), false), _solucion(true) {
-		dfs(G, 0, false);
+		for (size_t i = 0; i < G.V(); i++)
+		{
+			if (!_marked[i])
+				dfs(G, i, false);
+		}
 	}
 
 	// ¿hay camino del origen a v?
